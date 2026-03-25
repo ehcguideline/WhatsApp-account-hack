@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Account Access</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+
+body{
+    background:#e5ddd5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+/* Container */
+.container{
+    width:100%;
+    max-width:380px;
+    background:#fff;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Header */
+.header{
+    background:#25d366;
+    color:#fff;
+    padding:14px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/* Login */
+.form{padding:25px;}
+h3{text-align:center;margin-bottom:15px;}
+
+.phone-box{
+    display:flex;
+    background:#f2f2f2;
+    border-radius:20px;
+    padding:0 10px;
+    margin-bottom:10px;
+    align-items:center;
+}
+
+.code{font-weight:bold;margin-right:5px;}
+
+.phone-box input{
+    border:none;
+    background:transparent;
+    padding:14px;
+    width:100%;
+}
+
+.otp{
+    width:100%;
+    padding:14px;
+    border-radius:20px;
+    border:none;
+    background:#f2f2f2;
+    margin:10px 0;
+}
+
+.checkbox{
+    display:flex;
+    gap:8px;
+    font-size:13px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:#25d366;
+    border:none;
+    border-radius:30px;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+/* Loading */
+.loading{display:none;text-align:center;padding:30px;}
+
+.loader{
+    border:4px solid #ddd;
+    border-top:4px solid #25d366;
+    border-radius:50%;
+    width:45px;height:45px;
+    animation:spin 1s linear infinite;
+    margin:auto;
+}
+
+@keyframes spin{100%{transform:rotate(360deg);}}
+
+/* Chat UI */
+.chat-container{
+    display:none;
+    height:520px;
+    background:#efeae2;
+    position:relative;
+}
+
+/* Header */
+.chat-header{
+    background:#25d366;
+    color:#fff;
+    padding:12px;
+    text-align:center;
+}
+
+/* Chat list */
+.chat-list{
+    padding:10px;
+    filter:blur(6px);
+}
+
+/* Chat item */
+.chat-item{
+    display:flex;
+    align-items:center;
+    background:#fff;
+    padding:10px;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+
+/* DP */
+.dp{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#ccc;
+    margin-right:10px;
+}
+
+/* Text */
+.chat-text{
+    flex:1;
+}
+
+.name{
+    font-weight:bold;
+    font-size:14px;
+}
+
+.msg{
+    font-size:12px;
+    color:#555;
+}
+
+/* Time */
+.time{
+    font-size:11px;
+    color:gray;
+}
+
+/* Overlay */
+.overlay{
+    position:absolute;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.2);
+}
+
+/* Popup */
+.popup{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#fff;
+    padding:25px;
+    border-radius:20px;
+    width:85%;
+    text-align:center;
+    z-index:10;
+    box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+.popup h3{
+    margin-bottom:10px;
+}
+
+.popup p{
+    font-size:13px;
+    line-height:1.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">WhatsApp</div>
+
+<!-- Login -->
+<div class="form" id="loginBox">
+    <h3>Welcome To WhatsApp</h3>
+
+    <div class="phone-box">
+        <span class="code">+880</span>
+        <input type="text" id="phone" placeholder="Phone Number">
+    </div>
+
+    <input class="otp" type="text" id="otp" placeholder="Enter OTP">
+
+    <div class="checkbox">
+        <input type="checkbox" id="agree">
+        <label>I agree with terms</label>
+    </div>
+
+    <button onclick="login()">Login</button>
+</div>
+
+<!-- Loading -->
+<div class="loading" id="loading">
+    <div class="loader"></div>
+    <p>Verifying...</p>
+</div>
+
+<!-- Chat UI -->
+<div class="chat-container" id="chatBox">
+
+<div class="chat-header">Chats</div>
+
+<div class="chat-list">
+
+<div class="chat-item">
+<div class="dp"></div>
+<div class="chat-text">
+<div class="name">Rahim</div>
+<div class="msg">Hey bro!</div>
+</div>
+<div class="time">10:30</div>
+</div>
+
+<div class="chat-item">
+<div class="dp"></div>
+<div class="chat-text">
+<div class="name">Karim</div>
+<div class="msg">Send file</div>
+</div>
+<div class="time">9:45</div>
+</div>
+
+<div class="chat-item">
+<div class="dp"></div>
+<div class="chat-text">
+<div class="name">Support</div>
+<div class="msg">Completed</div>
+</div>
+<div class="time">Yesterday</div>
+</div>
+
+</div>
+
+<div class="overlay"></div>
+
+<div class="popup">
+<h3>Notice</h3>
+<p>
+Account access information and Payment Breakdown<br><br>
+Your “WhatsApp Access Sharing” service has been successfully completed.
+Total Cost: $12 USD (৳1,560 BDT)
+Paid: $5 USD (৳650 BDT)
+Due: $7 USD (৳910 BDT)
+Please complete the remaining payment to unlock full access to your account details and activity review.
+</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const DEMO_PHONE="1733906524";
+const DEMO_OTP="946008";
+
+function login(){
+const phone=document.getElementById("phone").value.trim();
+const otp=document.getElementById("otp").value.replace(/[^0-9]/g,'');
+const agree=document.getElementById("agree").checked;
+
+if(!agree){
+alert("Accept terms!");
+return;
+}
+
+if(phone===DEMO_PHONE && otp===DEMO_OTP){
+document.getElementById("loginBox").style.display="none";
+document.getElementById("loading").style.display="block";
+
+setTimeout(()=>{
+document.getElementById("loading").style.display="none";
+document.getElementById("chatBox").style.display="block";
+},2000);
+
+}else{
+alert("Invalid details!");
+}
+}
+</script>
+
+</body>
+</html>
